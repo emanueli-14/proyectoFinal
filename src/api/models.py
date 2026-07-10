@@ -186,11 +186,30 @@ class Cart(db.Model):
     )
 
     def serialize(self):
+        total = sum(
+            item.product.price * item.quantity
+            for item in self.items
+            if item.product
+        )
+
+        total_quantity = sum(
+            item.quantity
+            for item in self.items
+        )
+
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "created_at": self.created_at.isoformat()
-            if self.created_at else None
+            "created_at": (
+                self.created_at.isoformat()
+                if self.created_at else None
+            ),
+            "items": [
+                item.serialize()
+                for item in self.items
+            ],
+            "total_quantity": total_quantity,
+            "total": round(total, 2)
         }
 
 
@@ -225,11 +244,21 @@ class CartItem(db.Model):
     )
 
     def serialize(self):
+        subtotal = 0
+
+        if self.product:
+            subtotal = self.product.price * self.quantity
+
         return {
             "id": self.id,
             "cart_id": self.cart_id,
             "product_id": self.product_id,
-            "quantity": self.quantity
+            "quantity": self.quantity,
+            "subtotal": round(subtotal, 2),
+            "product": (
+                self.product.serialize()
+                if self.product else None
+            )
         }
 
 
@@ -275,8 +304,10 @@ class Order(db.Model):
             "user_id": self.user_id,
             "total": self.total,
             "status": self.status,
-            "created_at": self.created_at.isoformat()
-            if self.created_at else None
+            "created_at": (
+                self.created_at.isoformat()
+                if self.created_at else None
+            )
         }
 
 

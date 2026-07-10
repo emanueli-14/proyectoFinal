@@ -9,6 +9,7 @@ from api.utils import APIException, generate_sitemap
 from api.models import db
 from api.routes import api
 from api.auth import auth
+from api.cart import cart
 from api.admin import setup_admin
 from api.commands import setup_commands
 
@@ -78,6 +79,7 @@ setup_commands(app)
 
 app.register_blueprint(api, url_prefix="/api")
 app.register_blueprint(auth, url_prefix="/api/auth")
+app.register_blueprint(cart, url_prefix="/api/cart")
 
 # ==========================
 # ERROR HANDLER
