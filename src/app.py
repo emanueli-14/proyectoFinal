@@ -3,6 +3,7 @@ from flask import Flask, jsonify, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
 from api.utils import APIException, generate_sitemap
 from api.models import db
@@ -20,6 +21,8 @@ static_file_dir = os.path.join(
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+
+CORS(app)
 
 # ==========================
 # DATABASE

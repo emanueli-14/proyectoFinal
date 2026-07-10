@@ -153,7 +153,9 @@ class Product(db.Model):
             "price": self.price,
             "stock": self.stock,
             "image_url": self.image_url,
-            "category_id": self.category_id
+            "category_id": self.category_id,
+            "category": self.category.serialize()
+            if self.category else None
         }
 
 
