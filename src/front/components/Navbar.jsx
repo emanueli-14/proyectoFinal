@@ -7,29 +7,133 @@ export const Navbar = () => {
 	const [user, setUser] = useState(() => {
 		const savedUser = localStorage.getItem("user");
 
-		return savedUser
-			? JSON.parse(savedUser)
-			: null;
+		try {
+			return savedUser ? JSON.parse(savedUser) : null;
+		} catch {
+			return null;
+		}
 	});
+
+	const [cartQuantity, setCartQuantity] = useState(0);
+
+	const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+	// ======================================
+	// OBTENER CANTIDAD DEL CARRITO
+	// ======================================
+
+	const loadCartQuantity = async () => {
+		const token = localStorage.getItem("token");
+
+		if (!token) {
+			setCartQuantity(0);
+			return;
+		}
+
+		try {
+			const response = await fetch(
+				`${backendUrl}/api/cart/`,
+				{
+					method: "GET",
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+
+			const data = await response.json();
+
+			if (!response.ok) {
+				setCartQuantity(0);
+				return;
+			}
+
+			setCartQuantity(
+				data.cart?.total_quantity || 0
+			);
+
+		} catch (error) {
+			console.error(
+				"Error al cargar el contador del carrito:",
+				error
+			);
+
+			setCartQuantity(0);
+		}
+	};
+
+	// ======================================
+	// ACTUALIZAR USUARIO
+	// ======================================
 
 	const updateUser = () => {
 		const savedUser = localStorage.getItem("user");
 
-		setUser(
-			savedUser
+		try {
+			const parsedUser = savedUser
 				? JSON.parse(savedUser)
-				: null
-		);
+				: null;
+
+			setUser(parsedUser);
+
+			if (parsedUser) {
+				loadCartQuantity();
+			} else {
+				setCartQuantity(0);
+			}
+		} catch {
+			setUser(null);
+			setCartQuantity(0);
+		}
 	};
 
+	// ======================================
+	// ACTUALIZAR CONTADOR
+	// ======================================
+
+	const updateCartQuantity = (event) => {
+		const updatedCart = event.detail;
+
+		if (updatedCart) {
+			setCartQuantity(
+				updatedCart.total_quantity || 0
+			);
+		} else {
+			loadCartQuantity();
+		}
+	};
+
+	// ======================================
+	// EVENTOS
+	// ======================================
+
 	useEffect(() => {
-		window.addEventListener("auth-change", updateUser);
-		window.addEventListener("storage", updateUser);
+		updateUser();
+
+		window.addEventListener(
+			"auth-change",
+			updateUser
+		);
+
+		window.addEventListener(
+			"cart-change",
+			updateCartQuantity
+		);
+
+		window.addEventListener(
+			"storage",
+			updateUser
+		);
 
 		return () => {
 			window.removeEventListener(
 				"auth-change",
 				updateUser
+			);
+
+			window.removeEventListener(
+				"cart-change",
+				updateCartQuantity
 			);
 
 			window.removeEventListener(
@@ -39,11 +143,16 @@ export const Navbar = () => {
 		};
 	}, []);
 
+	// ======================================
+	// CERRAR SESIÓN
+	// ======================================
+
 	const handleLogout = () => {
 		localStorage.removeItem("token");
 		localStorage.removeItem("user");
 
 		setUser(null);
+		setCartQuantity(0);
 
 		window.dispatchEvent(
 			new Event("auth-change")
@@ -53,10 +162,9 @@ export const Navbar = () => {
 	};
 
 	const navLinkClass = ({ isActive }) => {
-		return `nav-link ${isActive
-				? "active fw-semibold"
-				: ""
-			}`;
+		return `nav-link ${
+			isActive ? "active fw-semibold" : ""
+		}`;
 	};
 
 	return (
@@ -112,7 +220,11 @@ export const Navbar = () => {
 										to="/cart"
 										className={navLinkClass}
 									>
-										Carrito
+										Carrito{" "}
+
+										<span className="badge rounded-pill text-bg-primary">
+											{cartQuantity}
+										</span>
 									</NavLink>
 								</li>
 
