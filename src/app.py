@@ -10,8 +10,10 @@ from api.models import db
 from api.routes import api
 from api.auth import auth
 from api.cart import cart
+from api.orders import orders
 from api.admin import setup_admin
 from api.commands import setup_commands
+from api.payments import payments
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 
@@ -45,7 +47,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 # JWT
 # ==========================
 
-app.config["JWT_SECRET_KEY"] = "mi_clave_super_secreta_2026"
+app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
 
 jwt = JWTManager(app)
 
@@ -80,6 +82,9 @@ setup_commands(app)
 app.register_blueprint(api, url_prefix="/api")
 app.register_blueprint(auth, url_prefix="/api/auth")
 app.register_blueprint(cart, url_prefix="/api/cart")
+app.register_blueprint(orders, url_prefix="/api/orders")
+app.register_blueprint(payments, url_prefix="/api/payments")
+
 
 # ==========================
 # ERROR HANDLER

@@ -12,6 +12,9 @@ import { Products } from "./pages/Products";
 import { ProductDetail } from "./pages/ProductDetail";
 import { Cart } from "./pages/Cart";
 import { Profile } from "./pages/Profile";
+import { Orders } from "./pages/Orders";
+import { PaymentSuccess } from "./pages/PaymentSuccess";
+import { PaymentCancel } from "./pages/PaymentCancel";
 
 export const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -35,6 +38,12 @@ export const router = createBrowserRouter(
 			<Route path="cart" element={<Cart />} />
 
 			<Route path="profile" element={<Profile />} />
+
+			<Route path="orders" element={<Orders />} />
+
+			<Route path="payment-success" element={<PaymentSuccess />} />
+
+			<Route path="payment-cancel" element={<PaymentCancel />} />
 
 		</Route>
 

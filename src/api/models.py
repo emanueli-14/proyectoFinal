@@ -302,12 +302,16 @@ class Order(db.Model):
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "total": self.total,
+            "total": round(self.total, 2),
             "status": self.status,
             "created_at": (
                 self.created_at.isoformat()
                 if self.created_at else None
-            )
+            ),
+            "items": [
+                item.serialize()
+                for item in self.items
+            ]
         }
 
 
@@ -347,10 +351,17 @@ class OrderItem(db.Model):
     )
 
     def serialize(self):
+        subtotal = self.price * self.quantity
+
         return {
             "id": self.id,
             "order_id": self.order_id,
             "product_id": self.product_id,
             "quantity": self.quantity,
-            "price": self.price
+            "price": round(self.price, 2),
+            "subtotal": round(subtotal, 2),
+            "product": (
+                self.product.serialize()
+                if self.product else None
+            )
         }

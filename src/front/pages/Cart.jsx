@@ -9,6 +9,7 @@ export const Cart = () => {
     const [updatingItemId, setUpdatingItemId] = useState(null);
     const [error, setError] = useState("");
     const [message, setMessage] = useState("");
+    const [creatingOrder, setCreatingOrder] = useState(false);
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -242,6 +243,59 @@ export const Cart = () => {
             setError("No se pudo conectar con el servidor.");
         }
     };
+
+    const createOrder = async () => {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            navigate("/login");
+            return;
+        }
+
+        const confirmation = window.confirm(
+            "¿Quieres finalizar la compra?"
+        );
+
+        if (!confirmation) return;
+
+        try {
+            setCreatingOrder(true);
+            setError("");
+            setMessage("");
+
+            const response = await fetch(
+                `${backendUrl}/api/orders/`,
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                setError(data.message);
+                return;
+            }
+
+            setCart(data.cart);
+
+            setMessage(
+                `Pedido #${data.order.id} creado correctamente`
+            );
+
+            notifyCartChange(data.cart);
+
+        } catch (error) {
+            console.error(error);
+            setError("No se pudo crear el pedido.");
+        } finally {
+            setCreatingOrder(false);
+        }
+    };
+
 
     useEffect(() => {
         loadCart();
@@ -493,8 +547,12 @@ export const Cart = () => {
                                     <button
                                         type="button"
                                         className="btn btn-primary w-100 py-2"
+                                        onClick={createOrder}
+                                        disabled={creatingOrder}
                                     >
-                                        Finalizar compra
+                                        {creatingOrder
+                                            ? "Creando pedido..."
+                                            : "Finalizar compra"}
                                     </button>
 
                                     <Link

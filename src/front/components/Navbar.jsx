@@ -162,9 +162,8 @@ export const Navbar = () => {
 	};
 
 	const navLinkClass = ({ isActive }) => {
-		return `nav-link ${
-			isActive ? "active fw-semibold" : ""
-		}`;
+		return `nav-link ${isActive ? "active fw-semibold" : ""
+			}`;
 	};
 
 	return (
@@ -225,6 +224,14 @@ export const Navbar = () => {
 										<span className="badge rounded-pill text-bg-primary">
 											{cartQuantity}
 										</span>
+									</NavLink>
+								</li>
+								<li className="nav-item">
+									<NavLink
+										to="/orders"
+										className={navLinkClass}
+									>
+										Mis pedidos
 									</NavLink>
 								</li>
 
