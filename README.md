@@ -4,9 +4,6 @@
 
 **Backend API:** https://proyectofinal-96ln.onrender.com
 
-
-
-
 # VIMILEA - Tech Store
 
 VIMILEA es una tienda online de tecnología desarrollada como proyecto final de 4Geeks Academy.
@@ -20,12 +17,14 @@ El proyecto está desarrollado con una arquitectura Full Stack utilizando React 
 ## Tecnologías utilizadas
 
 ### Frontend
+
 - React
 - React Router
 - Bootstrap 5
 - Vite
 
 ### Backend
+
 - Python
 - Flask
 - SQLAlchemy
@@ -33,13 +32,16 @@ El proyecto está desarrollado con una arquitectura Full Stack utilizando React 
 - Flask-Migrate
 
 ### Base de datos
+
 - PostgreSQL
 
 ### Pasarela de pago
+
 - Stripe Checkout
 - Stripe Webhooks
 
 ### Despliegue
+
 - Render
 - GitHub
 

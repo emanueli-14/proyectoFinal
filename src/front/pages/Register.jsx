@@ -137,7 +137,7 @@ export const Register = () => {
 												className="form-control"
 												value={formData.first_name}
 												onChange={handleChange}
-												placeholder="Emanueli"
+												placeholder="Nombre..."
 												required
 											/>
 										</div>
@@ -157,7 +157,7 @@ export const Register = () => {
 												className="form-control"
 												value={formData.last_name}
 												onChange={handleChange}
-												placeholder="Godoy"
+												placeholder="Apellido"
 												required
 											/>
 										</div>
@@ -218,7 +218,7 @@ export const Register = () => {
 												className="form-control"
 												value={formData.phone}
 												onChange={handleChange}
-												placeholder="600123456"
+												placeholder="Telefono"
 											/>
 										</div>
 
@@ -237,7 +237,7 @@ export const Register = () => {
 												className="form-control"
 												value={formData.address}
 												onChange={handleChange}
-												placeholder="Madrid, España"
+												placeholder="Ciudad..."
 											/>
 										</div>
 
