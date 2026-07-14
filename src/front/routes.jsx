@@ -9,7 +9,6 @@ import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import { Products } from "./pages/Products";
-import { ProductDetail } from "./pages/ProductDetail";
 import { Cart } from "./pages/Cart";
 import { Profile } from "./pages/Profile";
 import { Orders } from "./pages/Orders";
@@ -32,8 +31,6 @@ export const router = createBrowserRouter(
 			<Route path="register" element={<Register />} />
 
 			<Route path="products" element={<Products />} />
-
-
 
 			<Route path="cart" element={<Cart />} />
 
