@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 
+
+
 export const Navbar = () => {
 	const navigate = useNavigate();
 
@@ -17,10 +19,6 @@ export const Navbar = () => {
 	const [cartQuantity, setCartQuantity] = useState(0);
 
 	const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
-	// ======================================
-	// OBTENER CANTIDAD DEL CARRITO
-	// ======================================
 
 	const loadCartQuantity = async () => {
 		const token = localStorage.getItem("token");
@@ -51,7 +49,6 @@ export const Navbar = () => {
 			setCartQuantity(
 				data.cart?.total_quantity || 0
 			);
-
 		} catch (error) {
 			console.error(
 				"Error al cargar el contador del carrito:",
@@ -61,10 +58,6 @@ export const Navbar = () => {
 			setCartQuantity(0);
 		}
 	};
-
-	// ======================================
-	// ACTUALIZAR USUARIO
-	// ======================================
 
 	const updateUser = () => {
 		const savedUser = localStorage.getItem("user");
@@ -87,10 +80,6 @@ export const Navbar = () => {
 		}
 	};
 
-	// ======================================
-	// ACTUALIZAR CONTADOR
-	// ======================================
-
 	const updateCartQuantity = (event) => {
 		const updatedCart = event.detail;
 
@@ -102,10 +91,6 @@ export const Navbar = () => {
 			loadCartQuantity();
 		}
 	};
-
-	// ======================================
-	// EVENTOS
-	// ======================================
 
 	useEffect(() => {
 		updateUser();
@@ -143,10 +128,6 @@ export const Navbar = () => {
 		};
 	}, []);
 
-	// ======================================
-	// CERRAR SESIÓN
-	// ======================================
-
 	const handleLogout = () => {
 		localStorage.removeItem("token");
 		localStorage.removeItem("user");
@@ -162,18 +143,39 @@ export const Navbar = () => {
 	};
 
 	const navLinkClass = ({ isActive }) => {
-		return `nav-link ${isActive ? "active fw-semibold" : ""
+		return `nav-link px-3 ${isActive
+			? "active fw-semibold text-dark"
+			: "text-secondary"
 			}`;
 	};
 
 	return (
-		<nav className="navbar navbar-expand-lg bg-dark navbar-dark shadow-sm">
-			<div className="container">
+		<nav className="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+			<div className="container py-2">
 				<Link
-					className="navbar-brand fw-bold"
+					className="navbar-brand d-flex flex-column lh-1"
 					to="/"
 				>
-					🛍️ Mi Tienda
+					<span
+						className="fw-bold text-dark"
+						style={{
+							letterSpacing: "0.18rem",
+							fontSize: "1.8rem"
+						}}
+					>
+						VIMILEA
+					</span>
+
+
+					<small
+						className="text-secondary"
+						style={{
+							fontSize: "0.65rem",
+							letterSpacing: "0.08rem",
+						}}
+					>
+						TECH STORE
+					</small>
 				</Link>
 
 				<button
@@ -192,7 +194,7 @@ export const Navbar = () => {
 					className="collapse navbar-collapse"
 					id="mainNavbar"
 				>
-					<ul className="navbar-nav me-auto mb-2 mb-lg-0">
+					<ul className="navbar-nav mx-auto mb-2 mb-lg-0">
 						<li className="nav-item">
 							<NavLink
 								to="/"
@@ -208,7 +210,7 @@ export const Navbar = () => {
 								to="/products"
 								className={navLinkClass}
 							>
-								Productos
+								Tienda
 							</NavLink>
 						</li>
 
@@ -219,19 +221,20 @@ export const Navbar = () => {
 										to="/cart"
 										className={navLinkClass}
 									>
-										Carrito{" "}
+										Carrito
 
-										<span className="badge rounded-pill text-bg-primary">
+										<span className="badge rounded-pill bg-dark ms-2">
 											{cartQuantity}
 										</span>
 									</NavLink>
 								</li>
+
 								<li className="nav-item">
 									<NavLink
 										to="/orders"
 										className={navLinkClass}
 									>
-										Mis pedidos
+										Pedidos
 									</NavLink>
 								</li>
 
@@ -249,13 +252,13 @@ export const Navbar = () => {
 
 					{user ? (
 						<div className="d-flex flex-column flex-lg-row align-items-lg-center gap-2">
-							<span className="navbar-text text-light me-lg-2">
+							<span className="text-secondary small me-lg-2">
 								Hola, {user.first_name}
 							</span>
 
 							<button
 								type="button"
-								className="btn btn-outline-light"
+								className="btn btn-dark"
 								onClick={handleLogout}
 							>
 								Cerrar sesión
@@ -265,16 +268,16 @@ export const Navbar = () => {
 						<div className="d-flex gap-2">
 							<Link
 								to="/login"
-								className="btn btn-outline-light"
+								className="btn btn-outline-dark"
 							>
 								Iniciar sesión
 							</Link>
 
 							<Link
 								to="/register"
-								className="btn btn-primary"
+								className="btn btn-dark"
 							>
-								Registrarse
+								Crear cuenta
 							</Link>
 						</div>
 					)}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const ProductCard = ({ product }) => {
 	const navigate = useNavigate();
@@ -10,7 +10,7 @@ export const ProductCard = ({ product }) => {
 
 	const imageUrl =
 		product.image_url ||
-		"https://via.placeholder.com/600x400?text=Producto";
+		"https://via.placeholder.com/600x500?text=VIMILEA";
 
 	const handleAddToCart = async () => {
 		const token = localStorage.getItem("token");
@@ -50,19 +50,22 @@ export const ProductCard = ({ product }) => {
 					data.message ||
 					"No se pudo añadir el producto al carrito."
 				);
+
 				return;
 			}
 
-			setMessage("Producto añadido al carrito.");
+			setMessage("Producto añadido al carrito");
 
 			window.dispatchEvent(
 				new CustomEvent("cart-change", {
 					detail: data.cart,
 				})
 			);
-
 		} catch (error) {
-			console.error("Error al añadir al carrito:", error);
+			console.error(
+				"Error al añadir el producto:",
+				error
+			);
 
 			setError("No se pudo conectar con el servidor.");
 		} finally {
@@ -71,25 +74,46 @@ export const ProductCard = ({ product }) => {
 	};
 
 	return (
-		<div className="card h-100 border-0 shadow-sm">
-			<img
-				src={imageUrl}
-				className="card-img-top"
-				alt={product.name}
-				style={{
-					height: "220px",
-					objectFit: "cover",
-				}}
-			/>
+		<article className="card h-100 border-0 shadow-sm overflow-hidden product-card">
+			<div
+				className="position-relative bg-light"
+				style={{ minHeight: "300px" }}
+			>
+				<img
+					src={imageUrl}
+					className="card-img-top"
+					alt={product.name}
+					style={{
+						width: "100%",
+						height: "300px",
+						objectFit: "cover",
+					}}
+				/>
 
-			<div className="card-body d-flex flex-column p-4">
 				{product.category && (
-					<span className="badge text-bg-light align-self-start mb-2">
+					<span className="position-absolute top-0 start-0 badge bg-white text-dark m-3 px-3 py-2 shadow-sm">
 						{product.category.name}
 					</span>
 				)}
 
-				<h2 className="h5 fw-bold">
+				{product.stock <= 0 && (
+					<div className="position-absolute top-0 end-0 m-3">
+						<span className="badge bg-danger px-3 py-2">
+							Agotado
+						</span>
+					</div>
+				)}
+			</div>
+
+			<div className="card-body d-flex flex-column p-4">
+				<p
+					className="text-uppercase text-secondary small mb-2"
+					style={{ letterSpacing: "0.08rem" }}
+				>
+					VIMILEA Selection
+				</p>
+
+				<h2 className="h5 fw-bold text-dark mb-3">
 					{product.name}
 				</h2>
 
@@ -97,58 +121,56 @@ export const ProductCard = ({ product }) => {
 					{product.description}
 				</p>
 
-				<div className="d-flex justify-content-between align-items-center mb-3">
-					<span className="fs-5 fw-bold text-primary">
+				<div className="d-flex justify-content-between align-items-center mt-3 mb-4">
+					<span className="h4 fw-bold mb-0">
 						{Number(product.price).toFixed(2)} €
 					</span>
 
 					<span
 						className={
 							product.stock > 0
-								? "text-success"
-								: "text-danger"
+								? "small text-success"
+								: "small text-danger"
 						}
 					>
 						{product.stock > 0
-							? `Stock: ${product.stock}`
+							? `${product.stock} disponibles`
 							: "Sin stock"}
 					</span>
 				</div>
 
 				{error && (
-					<div className="alert alert-danger py-2">
+					<div className="alert alert-danger py-2 small">
 						{error}
 					</div>
 				)}
 
 				{message && (
-					<div className="alert alert-success py-2">
+					<div className="alert alert-success py-2 small">
 						{message}
 					</div>
 				)}
 
-				<div className="d-grid gap-2">
-					<Link
-						to={`/products/${product.id}`}
-						className="btn btn-outline-dark"
-					>
-						Ver detalle
-					</Link>
+				<div className="d-grid">
+
 
 					<button
 						type="button"
-						className="btn btn-primary"
+						className="btn btn-dark"
 						onClick={handleAddToCart}
-						disabled={loading || product.stock <= 0}
+						disabled={
+							loading ||
+							product.stock <= 0
+						}
 					>
 						{loading
 							? "Añadiendo..."
 							: product.stock > 0
 								? "Añadir al carrito"
-								: "Sin stock"}
+								: "Producto agotado"}
 					</button>
 				</div>
 			</div>
-		</div>
+		</article>
 	);
 };

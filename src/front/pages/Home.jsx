@@ -2,102 +2,139 @@ import { Link } from "react-router-dom";
 
 export const Home = () => {
 	return (
-		<main>
-			<section className="py-5 bg-light">
+		<>
+			{/* HERO */}
+			<section
+				className="bg-dark text-white d-flex align-items-center"
+				style={{ minHeight: "85vh" }}
+			>
 				<div className="container">
-					<div className="row align-items-center min-vh-50">
-						<div className="col-12 col-lg-6 mb-4 mb-lg-0">
-							<p className="text-uppercase fw-semibold text-primary mb-2">
-								Tu tienda online
-							</p>
+					<div className="row align-items-center">
 
-							<h1 className="display-4 fw-bold mb-3">
-								Encuentra productos para tu día a día
+						<div className="col-lg-6">
+
+							<h5 className="text-uppercase text-info mb-3">
+								Bienvenido a
+							</h5>
+
+
+							<h1
+								className="display-2 fw-bold"
+								style={{ letterSpacing: "3px" }}
+							>
+								VIMILEA
 							</h1>
 
-							<p className="lead text-secondary mb-4">
-								Descubre nuestro catálogo, consulta los detalles de cada
-								producto y compra de forma sencilla y segura.
+							<p className="lead mt-4">
+								Tecnología para tu día a día.
 							</p>
 
-							<div className="d-flex flex-wrap gap-3">
-								<Link to="/products" className="btn btn-primary btn-lg">
-									Ver productos
-								</Link>
+							<p className="text-light mb-5">
+								Descubre dispositivos tecnológicos cuidadosamente
+								seleccionados para ofrecerte calidad, innovación
+								y una experiencia de compra rápida y segura.
+							</p>
 
-								<Link to="/register" className="btn btn-outline-dark btn-lg">
-									Crear cuenta
-								</Link>
-							</div>
+							<Link
+								to="/products"
+								className="btn btn-light btn-lg px-5"
+							>
+								Comprar ahora
+							</Link>
+
 						</div>
 
-						<div className="col-12 col-lg-6">
-							<div className="bg-white rounded-4 shadow-sm p-5 text-center">
-								<div className="display-1 mb-3">🛍️</div>
+						<div className="col-lg-6 text-center">
 
-								<h2 className="h3 fw-bold">
-									Compra fácil y rápido
-								</h2>
+							<img
 
-								<p className="text-secondary mb-0">
-									Productos, carrito, perfil de usuario y pagos en una sola
-									aplicación.
-								</p>
-							</div>
+								src="https://images.unsplash.com/photo-1498049794561-7780e7231661?w=1200"
+								className="img-fluid rounded-4 shadow-lg"
+								alt="Tecnología VIMILEA"
+							/>
+
+
 						</div>
+
 					</div>
 				</div>
-			</section>
+			</section >
 
-			<section className="py-5">
+			{/* BENEFICIOS */}
+
+			< section className="py-5" >
+
 				<div className="container">
-					<div className="text-center mb-5">
-						<h2 className="fw-bold">¿Qué encontrarás en nuestra tienda?</h2>
 
-						<p className="text-secondary">
-							Una experiencia sencilla para descubrir y comprar productos.
-						</p>
+					<div className="row text-center">
+
+						<div className="col-md-4">
+
+							<h2>💻</h2>
+
+							<h4>Tecnología de última generación</h4>
+
+							<p>
+								Equipos modernos seleccionados para ofrecer el mejor rendimiento.
+							</p>
+
+						</div>
+
+						<div className="col-md-4">
+
+							<h2>🔒</h2>
+
+							<h4>Pago seguro</h4>
+
+							<p>
+								Todas las compras están protegidas mediante Stripe.
+							</p>
+
+						</div>
+
+						<div className="col-md-4">
+
+							<h2>🚚</h2>
+
+							<h4>Envío rápido</h4>
+
+							<p>
+								Recibe tus productos de forma rápida y segura.
+							</p>
+
+						</div>
+
 					</div>
 
-					<div className="row g-4">
-						<div className="col-12 col-md-4">
-							<div className="card h-100 border-0 shadow-sm">
-								<div className="card-body p-4 text-center">
-									<div className="fs-1 mb-3">📦</div>
-									<h3 className="h5 fw-bold">Catálogo completo</h3>
-									<p className="text-secondary mb-0">
-										Explora todos los productos disponibles y sus categorías.
-									</p>
-								</div>
-							</div>
-						</div>
-
-						<div className="col-12 col-md-4">
-							<div className="card h-100 border-0 shadow-sm">
-								<div className="card-body p-4 text-center">
-									<div className="fs-1 mb-3">🛒</div>
-									<h3 className="h5 fw-bold">Carrito conectado</h3>
-									<p className="text-secondary mb-0">
-										Guarda productos, cambia cantidades y revisa el total.
-									</p>
-								</div>
-							</div>
-						</div>
-
-						<div className="col-12 col-md-4">
-							<div className="card h-100 border-0 shadow-sm">
-								<div className="card-body p-4 text-center">
-									<div className="fs-1 mb-3">🔒</div>
-									<h3 className="h5 fw-bold">Compra segura</h3>
-									<p className="text-secondary mb-0">
-										Registro, login y acceso protegido mediante JWT.
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
-			</section>
-		</main>
+
+			</section >
+
+			{/* CTA */}
+
+			< section className="bg-light py-5" >
+
+				<div className="container text-center">
+
+					<h2 className="fw-bold mb-4">
+						Empieza a comprar hoy mismo
+					</h2>
+
+					<p className="mb-4">
+						Explora nuestro catálogo y encuentra productos únicos
+						con la mejor experiencia de compra.
+					</p>
+
+					<Link
+						to="/products"
+						className="btn btn-dark btn-lg"
+					>
+						Ver catálogo
+					</Link>
+
+				</div>
+
+			</section >
+		</>
 	);
 };

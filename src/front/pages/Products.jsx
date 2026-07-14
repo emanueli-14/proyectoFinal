@@ -100,12 +100,19 @@ export const Products = () => {
             <div className="container">
                 <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
                     <div>
-                        <h1 className="fw-bold mb-1">
-                            Productos
+                        <p
+                            className="text-uppercase text-secondary small mb-2"
+                            style={{ letterSpacing: "0.12rem" }}
+                        >
+                            Colección VIMILEA
+                        </p>
+
+                        <h1 className="display-5 fw-bold mb-2">
+                            Nuestra selección
                         </h1>
 
                         <p className="text-secondary mb-0">
-                            Explora todos los productos disponibles.
+                            Descubre productos elegidos por su estilo, calidad y funcionalidad.
                         </p>
                     </div>
                 </div>
